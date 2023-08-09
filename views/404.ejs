@@ -1,0 +1,18 @@
+<%- include ('partials/header', {tituloWeb: '404' }) -%>
+
+
+    <h1>404 - RUTA NO ENCONTRADA</h1>
+
+    <h2>Redirigiendo a la pagina de inicio...</h2>
+
+    <script>
+        (
+            () => {
+                setTimeout(() => {
+                    window.location.href = `/api`
+                }, 1500);
+            })
+            ()
+    </script>
+
+    <%- include('partials/footer') %>

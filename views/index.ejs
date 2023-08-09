@@ -1,0 +1,29 @@
+<%- include ('partials/header', {tituloWeb: 'Lista de Imagenes' }) -%>
+
+    <div class="container">
+
+        <div class="row mt-5">
+            <h1 class="text-center border-botton">Lista de Imagenes</h1>
+            <div class="col">
+                <div class="col-md-3 mb-2">
+                    <a href="/api/cargar-imagen" class="btn btn sm btn-primary" id>Subir </a>
+                    <a href="#" class="btn btn-info text-light">Inicio</a>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>Id:</td>
+                            <td>Imagen</td>
+                        </tr>
+                    </thead>
+                    <tbody id="listaDeImagenes">
+          
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script src="/js/mostrar-imagenes.js"></script>
+    <%- include('partials/footer') %>
