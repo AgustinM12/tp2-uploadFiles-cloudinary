@@ -1,0 +1,82 @@
+<%- include ('partials/header', {tituloWeb: 'Editar Reservas' }) -%>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="row mb-2">
+                <div class="col-md-5">
+                    <a href="/api" id="btnRegresar" class="btn btn-sm btn-primary">Regresar</a>
+                    <a href="/api" class="btn btn-sm btn-info text-light">Inicio</a>
+                </div>
+            </div>
+
+            <div class="mx-auto text-center">
+                <form action="#" id="formActualizarReserva" class="rounded border p-3" data-id="<%= id %>">
+                    <h3 class="mb-3 text-center bg-primary text-light rounded p-2">Reservar un Nuevo Vuelo</h3>
+                    <div class="row">
+                        <!-- Nombre -->
+                        <div class="col col-md-6 col-sm-12 mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" required="true" class="form-control" id="nombre" name="nombre">
+                        </div>
+                        <!-- Apellido -->
+                        <div class="col col-md-6 col-sm-12 mb-3">
+                            <label for="apellido" class="form-label">Apellido</label>
+                            <input type="text" required="true" class="form-control" id="apellido" name="apellido">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- DNI -->
+                        <div class="col col-md-6 col-sm-12 mb-3">
+                            <label for="dni" class="form-label">DNI</label>
+                            <input type="text" required="true" class="form-control" id="dni" name="dni">
+                        </div>
+
+                        <!-- Telefono -->
+                        <div class="col col-sm-12 col-md-6 mb-3">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="text" required="true" class="form-control" id="telefono" name="telefono">
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <!-- Fecha salida -->
+                        <div class="col col-sm-12 col-md-6 mb-3">
+                            <label for="fecha" class="form-label">Fecha de salida</label>
+                            <input type="date" required="true" class="form-control" id="fecha_salida" name="fecha_salida">
+                        </div>
+
+                        <!-- Fecha llegada-->
+                        <div class="col col-sm-12 col-md-6 mb-3">
+                            <label for="fecha" class="form-label">Fecha de llegada</label>
+                            <input type="date" required="true" class="form-control" id="fecha_llegada" name="fecha_llegada">
+                        </div>
+                    </div>
+
+
+                    <div class="row justify-content-center">
+                        <!-- costo -->
+                        <div class="col col-md-6 col-sm-12 mb-3">
+                            <label for="costo" class="form-label">Costo</label>
+                            <input type="text" required="true" class="form-control" id="costo" name="costo">
+                        </div>
+
+                    </div>
+
+                    <div class="row d-flex align-items-center justify-content-center">
+                        <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-2 mb-1">
+                            <button type="submit" class="w-100 btn btn-sm btn-primary">Guardar</button>
+                        </div>
+                        <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-2 mb-1">
+                            <a href="/api" class="w-100 btn btn-sm btn-secondary">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/editar-reserva.js"></script>
+
+    <%- include('partials/footer') %>

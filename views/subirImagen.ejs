@@ -1,0 +1,52 @@
+<%- include ('partials/header', {tituloWeb: 'Subir Imagen' }) -%>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="row mb-2">
+                <div class="col-md-5">
+                    <a href="/index" id="btnRegresar" class="btn btn-sm btn-primary">Regresar</a>
+                    <a href="/index" class="btn btn-sm btn-info text-light">Inicio</a>
+                </div>
+            </div>
+
+            <div class="mx-auto text-center">
+                <form action="#" id="formNuevaReserva" class="rounded border p-3">
+                    <h3 class="mb-3 text-center bg-primary text-light rounded p-2">Subir una nueva imagen</h3>
+                    <div class="row py-5">
+                        <!-- Nombre -->
+                        <div class="col col-md-6 col-sm-12 mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" required="true" class="form-control" id="nombre" name="nombre">
+                        </div>
+                        <!-- descripcion -->
+                        <div class="col col-md-6 col-sm-12 mb-3">
+                            <label for="nombre" class="form-label">Descripcion</label>
+                            <input type="text" class="form-control" id="descripcion">
+                        </div>
+
+                        <!-- IMAGEN -->
+                        <div>
+                            <input type="file" name="image" id="archivo" accept="image/*">
+                            <button type="submit">Subir Imagen</button>
+                        </div>
+                    </div>
+
+                    <!-- BOTONES -->
+                    <div class="row d-flex align-items-center justify-content-center py-5">
+                        <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-2 mb-1">
+                            <button type="submit" class="w-100 btn btn-sm btn-primary">Guardar</button>
+                        </div>
+
+                        <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-2 mb-1">
+                            <a href="/index" class="w-100 btn btn-sm btn-secondary">Cancelar</a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/cargar-imagenes.js"></script>
+
+    <%- include('partials/footer') %>

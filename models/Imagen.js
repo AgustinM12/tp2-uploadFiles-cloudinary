@@ -7,13 +7,17 @@ const Imagen = sequelize.define('imagenes', {
         primaryKey: true,
         autoIncrement: true
     },
-    descripcion: {
+    nombre: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
     archivo: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    descripcion: {
+        type: DataTypes.STRING,
+        allowNull: true
     },
     createdAt: {
         type: DataTypes.DATE,
