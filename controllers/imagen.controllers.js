@@ -1,9 +1,10 @@
 const Imagen = require('../models/Imagen');
+const cloudinary = require("../utils/cloudinary")
 const ctrlImg = {};
 
 // RENDERIZAR VISTAS
 ctrlImg.RenderObtenerImagenes = (req, res) => {
-    res.render('index'); 
+    res.render('index');
 };
 
 ctrlImg.RenderCargarImagenes = (req, res) => {
@@ -11,10 +12,9 @@ ctrlImg.RenderCargarImagenes = (req, res) => {
 };
 
 ctrlImg.RenderEditarImagenes = (req, res) => {
-   const { id } = req.params;
+    const { id } = req.params;
     res.render('actualizarImagen', { id });
 };
-
 
 //         Rutas para CRUD 
 ctrlImg.obtenerImagenes = async (req, res) => {
@@ -39,24 +39,40 @@ ctrlImg.obtenerUnaImagen = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({
-            message: 'Error al obtener la usuario'
+            message: 'Error al obtener la imagen'
         })
     }
 }
 
-
-// Crear un registro
+// Cargar una imagen
 ctrlImg.cargarImagen = async (req, res) => {
+    console.log("Llegue");
     const {
         nombre,
         descripcion,
     } = req.body;
 
-
     try {
+
+        const image = req.files.image;
+        console.log(image)
+        console.log("req.body: ", req.body)
+        console.log("req.files:", req.files)
+
+
+        const result = await cloudinary.uploader.upload(image.tempFilePath, {
+            public_id: `${Date.now()}`,
+            resource_type: "auto",
+            folder: "images"
+        })
+
+        let imageUrl = result.secure_url;
+        console.log("URL de la imagen subida:", imageUrl);
+
         const cargarImagen = new Imagen({
             nombre,
             descripcion,
+            archivo: imageUrl
         });
 
         // los manda a la DB
@@ -65,6 +81,7 @@ ctrlImg.cargarImagen = async (req, res) => {
         return res.status(201).json({
             message: "Imagen subida exitosamente"
         })
+
     } catch (error) {
         console.log('Error al subir una imagen', error)
 
@@ -74,16 +91,16 @@ ctrlImg.cargarImagen = async (req, res) => {
     }
 }
 
-// Actualizar una registro
+// Actualizar una imagen NO FUNCIONA
 ctrlImg.editarImagen = async (req, res) => {
     try {
         const { id } = req.params;
         const registro = await Imagen.findByPk(id);
         await registro.update(req.body)
-        return res.json({message: 'Imagen editada correctamente'});
+        return res.json({ message: 'Imagen editada correctamente' });
     } catch (error) {
         console.log('Error al actualizar imagen', error);
-        return res.status(500).json({message: 'Error al actualizar la imagen'})
+        return res.status(500).json({ message: 'Error al actualizar la imagen' })
     }
 }
 
@@ -93,12 +110,13 @@ ctrlImg.eliminarImagen = async (req, res) => {
     const { id } = req.params;
     try {
         const registro = await Imagen.findByPk(id);
-        await registro.update({ estado: false });
-        return res.json({ message: 'registro eliminada correctamente'})
+        await registro.destroy();
+        return res.json({ message: 'Imagen eliminada correctamente' })
     } catch (error) {
-        console.log('Error al eliminar la registro', error);
+        console.log('Error al eliminar la imagen', error);
         return res.status(500).json({
-            message: 'Error al eliminar la registro'})
+            message: 'Error al eliminar la imagen'
+        })
     }
 }
 

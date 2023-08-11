@@ -37,7 +37,7 @@ const Imagen = sequelize.define('imagenes', {
 }, {
     createdAt: true,
     updatedAt: true,
-    deletedAt: true,
+    deletedAt: false,
     tableName: 'imagenes'
 });
 

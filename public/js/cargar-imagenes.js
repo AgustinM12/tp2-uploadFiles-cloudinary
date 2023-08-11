@@ -1,24 +1,20 @@
-const formNuevaReserva = document.getElementById('formNuevaReserva')
+const formNuevaImagen = document.getElementById('formNuevaImagen')
 
-formNuevaReserva.addEventListener('submit', async (e) => {
+formNuevaImagen.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const nombre = document.getElementById('nombre').value
-    const descripcion = document.getElementById('descripcion').value
+   /*  const nombre = document.getElementById("nombre").value
+    const descripcion = document.getElementById("descripcion").value
+    const image = document.getElementById("image").files */
 
-
-    const imagen = {
-        nombre,
-        descripcion,
-    }
-
+    const formData = new FormData(e.target);
+    // formData.append("nombre", nombre);
+    // formData.append("descripcion", descripcion);
+    // formData.append("image", image.files[0]);
 
     const respuesta = await fetch('/subirImagen', {
         method: 'POST',
-        body: JSON.stringify(imagen),
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        body: formData
     });
 
 
@@ -41,7 +37,7 @@ formNuevaReserva.addEventListener('submit', async (e) => {
         });
 
         setTimeout(() => {
-            window.location.href = '/index'
+            window.location.href = '/'
         }, 1500)
     }
 });

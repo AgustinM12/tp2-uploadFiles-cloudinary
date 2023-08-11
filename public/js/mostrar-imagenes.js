@@ -1,30 +1,29 @@
 const obtenerDatos = async () => {
     //SE SOLICITAN LAS RESERVAS AL SERVIDOR
-    const datos = await fetch('/api/app', {
+    const datos = await fetch('/app', {
         method: 'GET'
     });
-    const reservas = await datos.json();
-    return reservas;
+
+    const imagenes = await datos.json();
+    return imagenes;
 }
 
-//CARGAR LAS RESERVAS EN LA TABLA
-const mostrarReservas = (reservas, tablaElement) => {
+
+
+//CARGAR LAS imagenes EN LA TABLA
+const mostrarImagenes = (imagenes, tablaElement) => {
     let registros = '';
-    reservas.forEach(reserva => {
+    imagenes.forEach(imagen => {
         registros += `
           <tr>
-               <td>${reserva.codigo}</td>
-               <td>${reserva.nombre}</td>
-               <td>${reserva.apellido}</td>
-               <td>${reserva.dni}</td>
-               <td>${reserva.telefono}</td>
-               <td>${reserva.fecha_salida}</td>
-               <td>${reserva.fecha_llegada}</td>
-               <td>${reserva.costo}</td>
+               <td>${imagen.nombre}</td>
+               <td>${imagen.descripcion}</td>
+               <td><img src="${imagen.archivo}" alt="${imagen.archivo} width = "250" height = "250"
+               "></td>
                <td>
                <div class="row">
-               <a href="/api/actualizar-reserva/${reserva.id}" class="btn btn-sm btn-warning">Editar</a>
-               <button class="btn btn-danger btn-sm" data-id="${reserva.id}" onClick=eliminarUsuario(event)>Eliminar</button>
+               <a href="/actualizar-imagen/${imagen.id}" class="btn btn-sm btn-warning">Editar</a>
+               <button class="btn btn-danger btn-sm" data-id="${imagen.id}" onClick=eliminarImagen(event)>Eliminar</button>
                </div>
                </td>
           </tr>
@@ -36,13 +35,13 @@ const mostrarReservas = (reservas, tablaElement) => {
 };
 
 
-//ELIMINAR UNA RESERVA
-const eliminarUsuario = async (e) => {
+//ELIMINAR UNA imagen
+const eliminarImagen = async (e) => {
     console.log(e)
     const id = e.target.dataset.id;
 
     const resultado = await Swal.fire({
-        title: '¿Está seguro de eliminar la reserva?',
+        title: '¿Está seguro de eliminar la imagen?',
         text: "¡No podras deshacer este cambio!",
         icon: 'warning',
         showCancelButton: true,
@@ -56,7 +55,7 @@ const eliminarUsuario = async (e) => {
         return;
     }
 
-    const respuesta = await fetch(`/api/app/${id}`, {
+    const respuesta = await fetch(`/app/${id}`, {
         method: 'DELETE',
     })
 
@@ -71,7 +70,7 @@ const eliminarUsuario = async (e) => {
         })
     } else {
         Swal.fire({
-            title: 'Reserva eliminada correctamente',
+            title: 'Imagen eliminada correctamente',
             text: datos.message,
             icon: 'success',
             confirmButtonText: 'Aceptar'
@@ -80,15 +79,15 @@ const eliminarUsuario = async (e) => {
         // Redireccionar al usuario
 
     setTimeout(() => {
-        window.location.href = "/api"
+        window.location.href = "/"
     }, 1500);
 };
 
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Mostrar las reservas en la tabla
-    const tbody = document.getElementById('listaDeReservas');
-    const reservas = await obtenerDatos() // undefined si no obtenerDatos no retorna nada
-    mostrarReservas(reservas, tbody)
+    // Mostrar las imagenes en la tabla
+    const tbody = document.getElementById('listaDeImagenes');
+    const imagenes = await obtenerDatos() // undefined si no obtenerDatos no retorna nada
+    mostrarImagenes(imagenes, tbody)
 
 });
