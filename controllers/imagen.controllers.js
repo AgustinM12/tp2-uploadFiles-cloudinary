@@ -13,7 +13,7 @@ ctrlImg.RenderCargarImagenes = (req, res) => {
 
 ctrlImg.RenderEditarImagenes = (req, res) => {
     const { id } = req.params;
-    res.render('actualizarImagen', { id });
+    res.render('editarImagen', { id });
 };
 
 //         Rutas para CRUD 
@@ -91,13 +91,36 @@ ctrlImg.cargarImagen = async (req, res) => {
     }
 }
 
-// Actualizar una imagen NO FUNCIONA
+// Actualizar una imagen 
 ctrlImg.editarImagen = async (req, res) => {
+
     try {
         const { id } = req.params;
         const registro = await Imagen.findByPk(id);
         await registro.update(req.body)
-        return res.json({ message: 'Imagen editada correctamente' });
+
+        const image = req.files.image
+        console.log("req.files: ", req.files)
+
+        const result = await cloudinary.uploader.upload(image.tempFilePath, {
+            public_id: `${Date.now()}`,
+            resource_type: "auto",
+            folder: "images"
+        })
+
+        let imageUrl = result.secure_url;
+        console.log("URL de la imagen subida:", imageUrl);
+
+        const cargarImagen = new Imagen({
+            archivo: imageUrl
+        })
+
+        await cargarImagen.save();
+
+        return res.status(201).json({
+            message: "Imagen actualizada exitosamente"
+        })
+
     } catch (error) {
         console.log('Error al actualizar imagen', error);
         return res.status(500).json({ message: 'Error al actualizar la imagen' })

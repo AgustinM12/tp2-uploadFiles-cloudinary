@@ -8,8 +8,6 @@ const obtenerDatos = async () => {
     return imagenes;
 }
 
-
-
 //CARGAR LAS imagenes EN LA TABLA
 const mostrarImagenes = (imagenes, tablaElement) => {
     let registros = '';
@@ -22,16 +20,14 @@ const mostrarImagenes = (imagenes, tablaElement) => {
                "></td>
                <td>
                <div class="row">
-               <a href="/actualizar-imagen/${imagen.id}" class="btn btn-sm btn-warning">Editar</a>
+               <a href="/editarImagen/${imagen.id}" class="btn btn-sm btn-warning">Editar</a>
                <button class="btn btn-danger btn-sm" data-id="${imagen.id}" onClick=eliminarImagen(event)>Eliminar</button>
                </div>
                </td>
           </tr>
         `
     })
-
     tablaElement.innerHTML = registros;
-
 };
 
 

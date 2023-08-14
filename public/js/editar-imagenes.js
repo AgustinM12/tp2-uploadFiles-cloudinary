@@ -1,48 +1,49 @@
-const formActualizarReserva = document.getElementById('formActualizarReserva');
-const id = formActualizarReserva.dataset.id;
+const formActualizarImagen = document.getElementById('formActualizarImagen');
+const id = formActualizarImagen.dataset.id;
 
 const nombre = document.getElementById('nombre')
-const apellido = document.getElementById('apellido')
-const dni = document.getElementById('dni')
-const telefono = document.getElementById('telefono')
-const fecha_salida = document.getElementById('fecha_salida')
-const fecha_llegada = document.getElementById('fecha_llegada')
-const costo = document.getElementById('costo')
+const descripcion = document.getElementById('descripcion')
+
+// const imagenAntigua = document.getElementById("imagenAntigua")
+
+// let imagenAcambiar = ""
+
+// imagenAcambiar += 
+// `
+// <img src="${imagen}">
+// `
 
 
 document.addEventListener('DOMContentLoaded', async () => {
     // Traemos la reserva que se va a editar
-    const datos = await fetch(`/api/app/${id}`);
+    const datos = await fetch(`/app/${id}`);
     const respuesta = await datos.json();
 
     // Mostrar en el formulario los respuesta de la reserva que se quiere actualizar
     nombre.value = respuesta.nombre;
-    apellido.value = respuesta.apellido;
-    dni.value = respuesta.dni;
-    telefono.value = respuesta.telefono;
-    fecha_salida.value = respuesta.fecha_salida;
-    fecha_llegada.value = respuesta.fecha_llegada;
-    costo.value = respuesta.costo;
+    descripcion.value = respuesta.descripcion;
+
 
 });
 
 
-formActualizarReserva.addEventListener('submit', async (e) => {
+formActualizarImagen.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    const response = await fetch('/subirImagen', {
+        method: 'POST',
+        body: formData
+    });
 
     reservaActualizada = {
         nombre: nombre.value,
-        apellido: apellido.value,
-        dni: dni.value,
-        telefono: telefono.value,
-        fecha_salida: fecha_salida.value,
-        fecha_llegada: fecha_llegada.value,
-        costo: costo.value
+        descripcion: descripcion.value,
     }
 
-
     // Se envían los nuevos datos al servidor express
-    const respuesta = await fetch(`/api/app/${id}`, {
+    const respuesta = await fetch(`/app/${id}`, {
         method: 'PUT',
         body: JSON.stringify(reservaActualizada),
         headers: {
@@ -61,8 +62,6 @@ formActualizarReserva.addEventListener('submit', async (e) => {
         });
     }
 
-
-
     // Mostrar mensajes al usuario
     Swal.fire({
         title: 'Reserva actualizada',
@@ -72,6 +71,6 @@ formActualizarReserva.addEventListener('submit', async (e) => {
     })
     // Redireccionar al usuario
     setTimeout(() => {
-        window.location.href = "/api"
+        window.location.href = "/"
     }, 1500);
 })

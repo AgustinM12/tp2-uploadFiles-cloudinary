@@ -3,14 +3,7 @@ const formNuevaImagen = document.getElementById('formNuevaImagen')
 formNuevaImagen.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-   /*  const nombre = document.getElementById("nombre").value
-    const descripcion = document.getElementById("descripcion").value
-    const image = document.getElementById("image").files */
-
     const formData = new FormData(e.target);
-    // formData.append("nombre", nombre);
-    // formData.append("descripcion", descripcion);
-    // formData.append("image", image.files[0]);
 
     const respuesta = await fetch('/subirImagen', {
         method: 'POST',

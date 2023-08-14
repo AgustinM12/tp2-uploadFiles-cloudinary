@@ -1,11 +1,8 @@
 // TODO: Importar el modelo y controladores de reservas, luego vincular rutas con controladores
 
-import { validationSchema } from '../middlewares/validationSchema';
-import { createUserSchema } from '../validation/form.schema';
-
 const router = require('express').Router();
 
-import {
+const {
     RenderObtenerImagenes,
     RenderCargarImagenes,
     RenderEditarImagenes,
@@ -14,7 +11,7 @@ import {
     obtenerUnaImagen,
     editarImagen,
     eliminarImagen
-} from '../controllers/imagen.controllers'
+} = require  ('../controllers/imagen.controllers');
 // ==========================================
 //         Rutas para renderizar vistas
 // ==========================================
@@ -26,7 +23,7 @@ router.get('/', RenderObtenerImagenes)
 router.get('/subirImagen', RenderCargarImagenes)
 
 // Formulario para actualizar una reserva
-router.get('/actualizarImagen/:id', RenderEditarImagenes)
+router.get('/editarImagen/:id', RenderEditarImagenes)
 
 // ==========================================
 //         Rutas para CRUD 
@@ -36,12 +33,14 @@ router.get('/actualizarImagen/:id', RenderEditarImagenes)
 router.get('/app/', obtenerImagenes);
 
 // Crear un registro
-router.post('/subirImagen', createUserSchema, validationSchema, cargarImagen);
+router.post('/subirImagen', cargarImagen);
 
 router.get('/app/:id', obtenerUnaImagen);
 
 // Actualizar una reserva
 router.put('/app/:id', editarImagen);
+
+router.post("app/:id", cargarImagen)
 
 // Eliminar una reserva de forma lógica
 router.delete('/app/:id', eliminarImagen);

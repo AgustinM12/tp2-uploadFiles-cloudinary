@@ -1,17 +1,13 @@
 // Imports
-import express from 'express';
-import cors from "cors";
-import helmet from "helmet";
-import morgan from "morgan";
-import path from "path";
-import fileUpload from 'express-fileupload';
+const express = require('express');
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const path = require("path");
+const fileUpload = require('express-fileupload');
 
-import dotenv from ("dotenv").config()
-import ejs from "ejs" ;
-
-// require('dotenv').config();
-// require('ejs')
-
+require ("dotenv").config()
+require ("ejs");
 
 //Se prueba la conexion a la base de datps
 const { conectarDB } = require('./database');
