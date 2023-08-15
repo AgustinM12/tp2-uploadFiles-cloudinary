@@ -3,15 +3,9 @@ const id = formActualizarImagen.dataset.id;
 
 const nombre = document.getElementById('nombre')
 const descripcion = document.getElementById('descripcion')
+const archivo = document.getElementById("archivo")
 
-// const imagenAntigua = document.getElementById("imagenAntigua")
 
-// let imagenAcambiar = ""
-
-// imagenAcambiar += 
-// `
-// <img src="${imagen}">
-// `
 
 document.addEventListener('DOMContentLoaded', async () => {
     // Traemos el registro que se va a editar
@@ -21,8 +15,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Mostrar en el formulario los respuesta del registro que se quiere actualizar
     nombre.value = respuesta.nombre;
     descripcion.value = respuesta.descripcion;
-
+    archivo.src = respuesta.archivo
+    
 });
+
 
 formActualizarImagen.addEventListener('submit', async (e) => {
     e.preventDefault();
