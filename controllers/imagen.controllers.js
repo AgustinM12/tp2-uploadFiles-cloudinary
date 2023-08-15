@@ -95,31 +95,50 @@ ctrlImg.cargarImagen = async (req, res) => {
 ctrlImg.editarImagen = async (req, res) => {
 
     try {
-        const { id } = req.params;
-        const registro = await Imagen.findByPk(id);
-        await registro.update(req.body)
+        // EN CASO DE QUE NO SE ACTUALICE LA IMAGEN
+        if (!req.files || !req.files.image) {
 
-        const image = req.files.image
-        console.log("req.files: ", req.files)
+            let { id } = req.params;
+            let registro = await Imagen.findByPk(id);
+            await registro.update({
+                nombre: req.body.nombre,
+                descripcion: req.body.descripcion,
+            })
 
-        const result = await cloudinary.uploader.upload(image.tempFilePath, {
-            public_id: `${Date.now()}`,
-            resource_type: "auto",
-            folder: "images"
-        })
+            return res.status(201).json({
+                message: "Registro actualizado correctamente"
+            });
 
-        let imageUrl = result.secure_url;
-        console.log("URL de la imagen subida:", imageUrl);
+        } else {
+            //SI SE SUBE UNA NUEVA IMAGEN
+            let image = req.files.image
 
-        const cargarImagen = new Imagen({
-            archivo: imageUrl
-        })
+            console.log("Datos de la imagen", req.files)
 
-        await cargarImagen.save();
+            const result = await cloudinary.uploader.upload(image.tempFilePath, {
+                public_id: `${Date.now()}`,
+                resource_type: "auto",
+                folder: "images"
+            })
 
-        return res.status(201).json({
-            message: "Imagen actualizada exitosamente"
-        })
+            let imageUrl = result.secure_url;
+            if (imageUrl != "") {
+
+                console.log("URL de la imagen subida:", imageUrl);
+
+                let { id } = req.params;
+                let registro = await Imagen.findByPk(id);
+                await registro.update({
+                    nombre: req.body.nombre,
+                    descripcion: req.body.descripcion,
+                    archivo: imageUrl
+                })
+            }
+
+            return res.status(201).json({
+                message: "Imagen actualizada exitosamente"
+            })
+        }
 
     } catch (error) {
         console.log('Error al actualizar imagen', error);
@@ -128,7 +147,7 @@ ctrlImg.editarImagen = async (req, res) => {
 }
 
 
-// Eliminar una registro de forma lógica
+// Eliminar una registro 
 ctrlImg.eliminarImagen = async (req, res) => {
     const { id } = req.params;
     try {

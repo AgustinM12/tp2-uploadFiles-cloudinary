@@ -13,47 +13,30 @@ const descripcion = document.getElementById('descripcion')
 // <img src="${imagen}">
 // `
 
-
 document.addEventListener('DOMContentLoaded', async () => {
-    // Traemos la reserva que se va a editar
+    // Traemos el registro que se va a editar
     const datos = await fetch(`/app/${id}`);
     const respuesta = await datos.json();
 
-    // Mostrar en el formulario los respuesta de la reserva que se quiere actualizar
+    // Mostrar en el formulario los respuesta del registro que se quiere actualizar
     nombre.value = respuesta.nombre;
     descripcion.value = respuesta.descripcion;
 
-
 });
-
 
 formActualizarImagen.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
 
-    const response = await fetch('/subirImagen', {
-        method: 'POST',
+    const respuesta = await fetch(`/app/${id}`, {
+        method: 'PUT',
         body: formData
     });
 
-    reservaActualizada = {
-        nombre: nombre.value,
-        descripcion: descripcion.value,
-    }
-
-    // Se envían los nuevos datos al servidor express
-    const respuesta = await fetch(`/app/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(reservaActualizada),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-
     const datos = await respuesta.json();
 
-    if (respuesta.status !== 200) {
+    if (respuesta.status !== 201) {
         return Swal.fire({
             title: 'Error',
             text: datos.message,
@@ -64,7 +47,7 @@ formActualizarImagen.addEventListener('submit', async (e) => {
 
     // Mostrar mensajes al usuario
     Swal.fire({
-        title: 'Reserva actualizada',
+        title: 'Imagen actualizada',
         text: datos.message,
         icon: 'success',
         confirmButtonText: 'Aceptar'

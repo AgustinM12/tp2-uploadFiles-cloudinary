@@ -10,7 +10,6 @@ formNuevaImagen.addEventListener('submit', async (e) => {
         body: formData
     });
 
-
     if (respuesta.status !== 201) {
         return Swal.fire({
             title: '¡Error!',
