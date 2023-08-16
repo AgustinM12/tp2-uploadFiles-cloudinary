@@ -1,5 +1,7 @@
 const Imagen = require('../models/Imagen');
 const cloudinary = require("../utils/cloudinary")
+const fs = require('fs');
+
 const ctrlImg = {};
 
 // RENDERIZAR VISTAS
@@ -134,6 +136,11 @@ ctrlImg.editarImagen = async (req, res) => {
                     archivo: imageUrl
                 })
             }
+
+            //ELIMINAR ARCHIVO TEMPORAL QUE SE UTILIZÓ PARA ENVIAR A CLOUDINARY
+            fs.unlink(image.tempFilePath, function (err) {
+                console.log(err);
+            });
 
             return res.status(201).json({
                 message: "Imagen actualizada exitosamente"

@@ -4,7 +4,7 @@ const id = formActualizarImagen.dataset.id;
 const nombre = document.getElementById('nombre')
 const descripcion = document.getElementById('descripcion')
 const archivo = document.getElementById("archivo")
-
+const subir = document.getElementById("subir")
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 formActualizarImagen.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    subir.disabled = true
 
     const formData = new FormData(e.target);
 
