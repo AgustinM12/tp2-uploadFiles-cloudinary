@@ -48,7 +48,6 @@ ctrlImg.obtenerUnaImagen = async (req, res) => {
 
 // Cargar una imagen
 ctrlImg.cargarImagen = async (req, res) => {
-    console.log("Llegue");
     const {
         nombre,
         descripcion,
